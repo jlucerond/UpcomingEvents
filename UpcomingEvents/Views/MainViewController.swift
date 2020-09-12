@@ -38,6 +38,10 @@ extension MainViewController {
         cell.updateWith(event: event)
         return cell
     }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        schedule[section].first?.headerLabel
+    }
 }
 
 // MARK: - Private Helper Methods

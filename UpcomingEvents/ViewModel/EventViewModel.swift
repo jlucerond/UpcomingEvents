@@ -15,13 +15,24 @@ struct EventViewModel {
         formatter.dateStyle = .none
         return formatter
     }()
+
+    private static let dayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        return formatter
+    }()
     
     private let event: Event
     let hasConflict: Bool
-    var titleLabel: String { event.start + "\n" + event.end }
+    var titleLabel: String { event.title }
     var times: (start: String, end: String)? {
         guard let startDate = event.startDate, let endDate = event.endDate else { return nil }
         return (EventViewModel.timeFormatter.string(from: startDate), EventViewModel.timeFormatter.string(from: endDate))
+    }
+    var headerLabel: String? {
+        guard let startDate = event.startDate else { return nil }
+        return EventViewModel.dayFormatter.string(from: startDate)
     }
     var accessibilityLabel: String {
         var string = ""
@@ -39,5 +50,11 @@ struct EventViewModel {
     init(event: Event, hasConflict: Bool) {
         self.event = event
         self.hasConflict = hasConflict
+    }
+}
+
+extension EventViewModel: Comparable {
+    static func < (lhs: EventViewModel, rhs: EventViewModel) -> Bool {
+        lhs.event < rhs.event
     }
 }
