@@ -10,18 +10,64 @@
         <scene sceneID="DZy-X2-8ff">
             <objects>
                 <tableViewController id="td4-Yp-Ac5" customClass="MainViewController" customModule="UpcomingEvents" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="4DZ-M0-sY8">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="130" estimatedRowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" id="4DZ-M0-sY8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventTableViewCell" id="lBE-Id-enY" customClass="EventTableViewCell" customModule="UpcomingEvents" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventTableViewCell" rowHeight="130" id="lBE-Id-enY" customClass="EventTableViewCell" customModule="UpcomingEvents" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lBE-Id-enY" id="mSX-L5-CgE">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50a-7U-1W1">
+                                            <rect key="frame" x="60" y="44.5" width="153" height="41"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamationmark.triangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Pqq-gq-aBK">
+                                            <rect key="frame" x="10" y="46" width="40" height="38"/>
+                                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="Obz-cf-zj1"/>
+                                                <constraint firstAttribute="width" constant="40" id="aHW-40-jXp"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="sBG-4i-xfk" userLabel="Date Stack">
+                                            <rect key="frame" x="326.5" y="40" width="77.5" height="50.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6:00pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7F-9c-bTI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="77.5" height="26.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8:00pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eo1-GV-RZ2">
+                                                    <rect key="frame" x="12" y="32.5" width="54" height="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Pqq-gq-aBK" firstAttribute="leading" secondItem="mSX-L5-CgE" secondAttribute="leading" constant="10" id="1Fg-jX-HoI"/>
+                                        <constraint firstAttribute="trailing" secondItem="sBG-4i-xfk" secondAttribute="trailing" constant="10" id="BOi-W1-2iM"/>
+                                        <constraint firstItem="sBG-4i-xfk" firstAttribute="centerY" secondItem="mSX-L5-CgE" secondAttribute="centerY" id="EQ3-rb-giP"/>
+                                        <constraint firstItem="50a-7U-1W1" firstAttribute="leading" secondItem="Pqq-gq-aBK" secondAttribute="trailing" constant="10" id="jGw-4h-1vT"/>
+                                        <constraint firstItem="50a-7U-1W1" firstAttribute="centerY" secondItem="mSX-L5-CgE" secondAttribute="centerY" id="yuz-PR-hMu"/>
+                                        <constraint firstItem="Pqq-gq-aBK" firstAttribute="centerY" secondItem="mSX-L5-CgE" secondAttribute="centerY" id="z8i-2N-nUH"/>
+                                        <constraint firstItem="sBG-4i-xfk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="50a-7U-1W1" secondAttribute="trailing" constant="10" id="zPB-u3-uav"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="conflictedEventImageView" destination="Pqq-gq-aBK" id="Bik-G5-Thl"/>
+                                    <outlet property="eventTitleLabel" destination="50a-7U-1W1" id="IUd-Gh-It7"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -33,7 +79,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pyx-al-p4c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="600" y="192.85714285714286"/>
+            <point key="canvasLocation" x="598.55072463768124" y="192.85714285714286"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="crz-xc-6pz">
@@ -54,4 +100,7 @@
             <point key="canvasLocation" x="-310.14492753623193" y="192.85714285714286"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="exclamationmark.triangle" catalog="system" width="128" height="112"/>
+    </resources>
 </document>
