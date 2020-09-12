@@ -10,7 +10,7 @@ import UIKit
 
 class MainViewController: UITableViewController {
     private let tableTitle = "Upcoming Events"
-    private var events = [EventViewModel]()
+    private var schedule = EventCoordinator.Schedule()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,13 +21,11 @@ class MainViewController: UITableViewController {
 
 // MARK: - TableViewDataSource Methods
 extension MainViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return schedule.count
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == 0 else {
-            assertionFailure("Not designed to have multiple sections at the moment")
-            return 0
-        }
-
-        return events.count
+        return schedule[section].count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -36,7 +34,7 @@ extension MainViewController {
             return UITableViewCell()
         }
 
-        let event = events[indexPath.row]
+        let event = schedule[indexPath.section][indexPath.row]
         cell.updateWith(event: event)
         return cell
     }
@@ -50,7 +48,7 @@ private extension MainViewController {
         EventCoordinator.shared.getEvents { result in
             switch result {
             case .success(let events):
-                self.events = events
+                self.schedule = events
             case .failure(let error):
                 self.handleErrorRetrieveingEvents(error: error)
             }

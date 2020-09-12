@@ -18,7 +18,7 @@ struct EventViewModel {
     
     private let event: Event
     let hasConflict: Bool
-    var titleLabel: String { event.title }
+    var titleLabel: String { event.start + "\n" + event.end }
     var times: (start: String, end: String)? {
         guard let startDate = event.startDate, let endDate = event.endDate else { return nil }
         return (EventViewModel.timeFormatter.string(from: startDate), EventViewModel.timeFormatter.string(from: endDate))
