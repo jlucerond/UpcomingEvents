@@ -9,9 +9,16 @@
 import Foundation
 
 struct Event: Codable {
-    private static var dateFormatter: DateFormatter = {
+    private static var convertFromDataDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, yyyy h:mm a"
+        return formatter
+    }()
+
+    private static var dayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .long
         return formatter
     }()
 
@@ -19,12 +26,17 @@ struct Event: Codable {
     let start: String
     let end: String
 
+    var dayString: String? {
+        guard let date = Event.convertFromDataDateFormatter.date(from: start) else { return nil }
+        return Event.dayFormatter.string(from: date)
+    }
+
     var startDate: Date? {
-        Event.dateFormatter.date(from: start)
+        Event.convertFromDataDateFormatter.date(from: start)
     }
 
     var endDate: Date? {
-        Event.dateFormatter.date(from: end)
+        Event.convertFromDataDateFormatter.date(from: end)
     }
 }
 

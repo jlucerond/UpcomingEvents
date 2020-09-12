@@ -10,6 +10,9 @@
 		D81A81C4250C4ECB00759D61 /* mock.json in Resources */ = {isa = PBXBuildFile; fileRef = D81A81C3250C4ECB00759D61 /* mock.json */; };
 		D81A81CA250C519F00759D61 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A81C9250C519F00759D61 /* Event.swift */; };
 		D81A81CD250C6BD100759D61 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A81CC250C6BD100759D61 /* EventTableViewCell.swift */; };
+		D81A81CF250C761B00759D61 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A81CE250C761B00759D61 /* EventViewModel.swift */; };
+		D8327003250C7C1400E238B0 /* EventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8327002250C7C1400E238B0 /* EventCoordinator.swift */; };
+		D8327005250C7C8000E238B0 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8327004250C7C8000E238B0 /* EventError.swift */; };
 		D879E5C5250C4B230049E8E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D879E5C4250C4B230049E8E3 /* AppDelegate.swift */; };
 		D879E5C7250C4B230049E8E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D879E5C6250C4B230049E8E3 /* SceneDelegate.swift */; };
 		D879E5C9250C4B230049E8E3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D879E5C8250C4B230049E8E3 /* MainViewController.swift */; };
@@ -22,6 +25,9 @@
 		D81A81C3250C4ECB00759D61 /* mock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mock.json; sourceTree = "<group>"; };
 		D81A81C9250C519F00759D61 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		D81A81CC250C6BD100759D61 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		D81A81CE250C761B00759D61 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
+		D8327002250C7C1400E238B0 /* EventCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCoordinator.swift; sourceTree = "<group>"; };
+		D8327004250C7C8000E238B0 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		D879E5C1250C4B230049E8E3 /* UpcomingEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UpcomingEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D879E5C4250C4B230049E8E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D879E5C6250C4B230049E8E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,8 +90,18 @@
 			isa = PBXGroup;
 			children = (
 				D81A81C9250C519F00759D61 /* Event.swift */,
+				D8327004250C7C8000E238B0 /* EventError.swift */,
+				D8327002250C7C1400E238B0 /* EventCoordinator.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D839134E250C7A5600BD9EFD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D81A81CE250C761B00759D61 /* EventViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		D879E5B8250C4B230049E8E3 = {
@@ -109,6 +125,7 @@
 			children = (
 				D81A81C8250C507D00759D61 /* Application */,
 				D81A81CB250C51A300759D61 /* Model */,
+				D839134E250C7A5600BD9EFD /* ViewModel */,
 				D81A81C7250C4F5E00759D61 /* Views */,
 				D81A81C5250C4F4000759D61 /* Utilities */,
 				D81A81C6250C4F5300759D61 /* MockData */,
@@ -193,6 +210,9 @@
 				D879E5C5250C4B230049E8E3 /* AppDelegate.swift in Sources */,
 				D81A81CD250C6BD100759D61 /* EventTableViewCell.swift in Sources */,
 				D879E5C7250C4B230049E8E3 /* SceneDelegate.swift in Sources */,
+				D8327003250C7C1400E238B0 /* EventCoordinator.swift in Sources */,
+				D81A81CF250C761B00759D61 /* EventViewModel.swift in Sources */,
+				D8327005250C7C8000E238B0 /* EventError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,12 +10,12 @@ import UIKit
 
 class MainViewController: UITableViewController {
     private let tableTitle = "Upcoming Events"
-    var testStrings = ["a", "b", "c"]
+    private var events = [EventViewModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = tableTitle
-        // TODO: - make a call to the EventCoordinator to get data and update the TableView
+        getEvents()
     }
 }
 
@@ -27,7 +27,7 @@ extension MainViewController {
             return 0
         }
 
-        return testStrings.count
+        return events.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -36,9 +36,31 @@ extension MainViewController {
             return UITableViewCell()
         }
 
-        let event = testStrings[indexPath.row]
+        let event = events[indexPath.row]
         cell.updateWith(event: event)
         return cell
     }
 }
 
+// MARK: - Private Helper Methods
+private extension MainViewController {
+    private var errorTitle: String { "Unable to Get Upcoming Events" }
+
+    func getEvents() {
+        EventCoordinator.shared.getEvents { result in
+            switch result {
+            case .success(let events):
+                self.events = events
+            case .failure(let error):
+                self.handleErrorRetrieveingEvents(error: error)
+            }
+        }
+    }
+
+    func handleErrorRetrieveingEvents(error: EventError) {
+        let alert = UIAlertController(title: errorTitle, message: error.userMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        navigationController?.present(alert, animated: true, completion: nil)
+    }
+}
