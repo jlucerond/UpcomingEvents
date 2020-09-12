@@ -10,14 +10,14 @@ import UIKit
 
 class EventTableViewCell: UITableViewCell {
     static let identifier = "EventTableViewCell"
-    private static let warning = "exclamationmark.triangle.fill"
+    private static let warningIdentifier = "exclamationmark.triangle.fill"
     @IBOutlet private weak var conflictedEventImageView: UIImageView!
     @IBOutlet private weak var eventTitleLabel: UILabel!
     @IBOutlet private weak var startTimeLabel: UILabel!
     @IBOutlet private weak var endTimeLabel: UILabel!
 
     func updateWith(event: EventViewModel) {
-        conflictedEventImageView.image = event.hasConflict ? UIImage(systemName: EventTableViewCell.warning) : nil
+        conflictedEventImageView.image = event.hasConflict ? UIImage(systemName: EventTableViewCell.warningIdentifier) : nil
         updateLabels(using: event)
         updateAccessibility(using: event)
     }

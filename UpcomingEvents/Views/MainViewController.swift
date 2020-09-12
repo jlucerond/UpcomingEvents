@@ -10,6 +10,7 @@ import UIKit
 
 class MainViewController: UITableViewController {
     private let tableTitle = "Upcoming Events"
+    private let loadingCellIdentifier = "LoadingCell"
     private var isLoadingData = false
     private var schedule = EventCoordinator.Schedule()
 
@@ -33,7 +34,7 @@ extension MainViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard !isLoadingData else {
-            return tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
+            return tableView.dequeueReusableCell(withIdentifier: loadingCellIdentifier, for: indexPath)
         }
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EventTableViewCell.identifier, for: indexPath) as? EventTableViewCell else {
@@ -64,14 +65,14 @@ private extension MainViewController {
             switch result {
             case .success(let events):
                 self.schedule = events
-                self.tableView.reloadData()
             case .failure(let error):
-                self.handleErrorRetrieveingEvents(error: error)
+                self.handleErrorRetrievingEvents(error: error)
             }
+            self.tableView.reloadData()
         }
     }
 
-    func handleErrorRetrieveingEvents(error: EventError) {
+    func handleErrorRetrievingEvents(error: EventError) {
         let alert = UIAlertController(title: errorTitle, message: error.userMessage, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)

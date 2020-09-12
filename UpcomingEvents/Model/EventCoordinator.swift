@@ -22,12 +22,16 @@ class EventCoordinator {
         // Put on a background thread to quasi-simu
         DispatchQueue.global(qos: .userInitiated).async {
             guard let urlForMockData = Bundle.main.url(forResource: "mock", withExtension: "json"), let data = try? Data.init(contentsOf: urlForMockData) else {
-                completion(.failure(.unableToGetEvents))
+                DispatchQueue.main.async {
+                    completion(.failure(.unableToGetEvents))
+                }
                 return
             }
 
             guard let events = try? JSONDecoder().decode([Event].self, from: data) else {
-                completion(.failure(.unableToDecodeEvents))
+                DispatchQueue.main.async {
+                    completion(.failure(.unableToDecodeEvents))
+                }
                 return
             }
 
@@ -51,7 +55,7 @@ private extension EventCoordinator {
 
          (Side note, i did think of this, and then after getting everything mostly working, I saw that you guys very purposefully tried to sneak in this scenario on the last day. Well done.)
 
-         This made me think that it would be better to pack things into days first and then apply the algorithm above (especially with the hint in the pdf that there's no events that start and end on different days.
+         This made me think that it would be better to pack things into days first and then apply the algorithm above (especially with the hint in the pdf that there are no events that start and end on different days.
          */
 
         var eventsByDay = putIntoDays(events: events)
@@ -102,6 +106,7 @@ private extension EventCoordinator {
         return calendar
     }
 
+    // This is my longest method that serves the very specific function of making an array of Bools that match the events. I could probably make it cleaner and break it up, but this has such a specific function that I'd hesitate to find another use case for this and therefore would rather keep the verbosity to help someone see my thought process.
     func getConflicts(events: [Event]) -> [Bool] {
         var conflicts = [Bool]()
 
@@ -138,7 +143,7 @@ private extension EventCoordinator {
                     conflicts.append(doesOverlapWithPreviousEvent)
                 }
             } else {
-                // in between events
+                // events that have both before and after events that should be checked
                 let watchOutForEarlierEvents = conflicts.last == true
                 let previousIndex = index - 1
                 let previousEvent = events[previousIndex]
@@ -160,10 +165,11 @@ private extension EventCoordinator {
             }
         }
 
-        assert(conflicts.count == events.count, "Made a mistake here.")
+        assert(conflicts.count == events.count, "Conflicts count should always equal events count.")
         return conflicts
     }
 
+    // This will go back to all the earlier events that need to be checked and sees if any of them overlap with the event. As soon as it finds a single earlier event that has a later end date, it stops and returns true.
     func doesOverlap(event: Event, earlierEvents: [Event]) -> Bool {
         for eventToCheck in earlierEvents {
             if doesOverlap(earlierEvent: eventToCheck, laterEvent: event) {
@@ -173,9 +179,10 @@ private extension EventCoordinator {
         return false
     }
 
+    // This checks two events (that must be placed in the proper order) to see if the later event starts before the earlier event ends
     func doesOverlap(earlierEvent: Event, laterEvent: Event) -> Bool {
         guard let earlierEnd = earlierEvent.endDate, let nextStart = laterEvent.startDate else {
-            assertionFailure("Again, something must have gone wrong. I probably should have made those dates non-optional")
+            assertionFailure("Again, something must have gone wrong. I probably should have made those dates non-optional in this small of a project but you get to see how many guard statements I litter my code with.")
             return false
         }
 
@@ -184,7 +191,7 @@ private extension EventCoordinator {
 
     func sortDays(schedule: inout Schedule) {
         schedule.sort { (day1, day2) -> Bool in
-            // I do the sanity check above, so I'm not as worried about empty arrays here, but I could do a better job here
+            // I do the sanity check in checkForConflictsAndReturnViewModel, so I'm not as worried about empty arrays here, but I could do a better job here in case someone tries to sort days that don't have events in them.
             guard let eventFromDay1 = day1.first, let eventFromDay2 = day2.first else { return false }
             return eventFromDay1 < eventFromDay2
         }

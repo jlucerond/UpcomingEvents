@@ -9,20 +9,6 @@
 import Foundation
 
 struct EventViewModel {
-    private static let timeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        formatter.dateStyle = .none
-        return formatter
-    }()
-
-    private static let dayFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .medium
-        return formatter
-    }()
-    
     private let event: Event
     let hasConflict: Bool
     var titleLabel: String { event.title }
@@ -53,8 +39,26 @@ struct EventViewModel {
     }
 }
 
+// MARK: - Comparable
 extension EventViewModel: Comparable {
     static func < (lhs: EventViewModel, rhs: EventViewModel) -> Bool {
         lhs.event < rhs.event
     }
+}
+
+// MARK: - Formatters
+private extension EventViewModel {
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        return formatter
+    }()
+
+    private static let dayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        return formatter
+    }()
 }
