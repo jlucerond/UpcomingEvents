@@ -18,26 +18,34 @@ class EventCoordinator {
 
     // Did a Result here with a completion handler rather than throwing errors since in the real world this would come from some network service
     func getEvents(completion: @escaping(Result<Schedule, EventError>) -> Void) {
-        guard let urlForMockData = Bundle.main.url(forResource: "mock", withExtension: "json"), let data = try? Data.init(contentsOf: urlForMockData) else {
-            completion(.failure(.unableToGetEvents))
-            return
+
+        // Put on a background thread to quasi-simu
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let urlForMockData = Bundle.main.url(forResource: "mock", withExtension: "json"), let data = try? Data.init(contentsOf: urlForMockData) else {
+                completion(.failure(.unableToGetEvents))
+                return
+            }
+
+            guard let events = try? JSONDecoder().decode([Event].self, from: data) else {
+                completion(.failure(.unableToDecodeEvents))
+                return
+            }
+
+            let calendar = self.convertToSortedSchedule(events: events)
+
+            // Pause to simulate network delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                completion(.success(calendar))
+            }
         }
-
-        guard let events = try? JSONDecoder().decode([Event].self, from: data) else {
-            completion(.failure(.unableToDecodeEvents))
-            return
-        }
-
-        let calendar = sortAndConvertToCalendar(events: events)
-
-        completion(.success(calendar))
     }
 }
 
+// MARK: - Private Helper Methods
 private extension EventCoordinator {
-    func sortAndConvertToCalendar(events: [Event]) -> Schedule {
+    func convertToSortedSchedule(events: [Event]) -> Schedule {
         /*
-         Here's where you're looking for my sub-O(n^2) algorithm and I do my best to explain my thought process. Full disclosure- this is one of my weaker areas as a programmer since I don't have a CS background so I'm interested in your thoughts on this.
+         Here's where you're looking for my sub-O(n^2) algorithm and I do my best to explain my thought process. Full disclosure- this is one of my weaker areas as a programmer since I don't have a CS degree so I'm interested in your thoughts on this.
 
          My first attempt at this was to just sort the events and then check the event before and after to see if either one conflicted. The issue with this is that you could have a meeting an hour ago that went only ten minutes, but an all day event that started before the earlier meeting might still conflict. So I'd need to check if the earlier event overlaps OR whether it itself has a conflict, because then I would need to recursively go backwards to see any potential conflicts.
 
@@ -70,7 +78,8 @@ private extension EventCoordinator {
         return eventsByDay
     }
 
-    // Next use inout parameter to sort the events by start date (as done in Event's comparable adherence, i.e. ["Jan 1, 2021": [event1, event2, event3]]. Because we're doing this with smaller sets of data rather than one big chunk, it should also be more performant.
+    // Next use inout parameter to sort the events by start date (as done in Event's comparable adherence, i.e. ["Jan 1, 2021": [event1, event2, event3]].
+    // Because we're doing this with smaller sets of data rather than one big chunk, it should also be faster.
     func sortEventsWithinEachDay(eventsByDay: inout EventsByDay) {
         for day in eventsByDay.keys {
             eventsByDay[day]?.sort()

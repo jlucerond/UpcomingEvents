@@ -1,5 +1,5 @@
 //
-//  UITableMainViewControllerViewController.swift
+//  MainViewController.swift
 //  UpcomingEvents
 //
 //  Created by Joe Lucero on 9/11/20.
@@ -10,6 +10,7 @@ import UIKit
 
 class MainViewController: UITableViewController {
     private let tableTitle = "Upcoming Events"
+    private var isLoadingData = false
     private var schedule = EventCoordinator.Schedule()
 
     override func viewDidLoad() {
@@ -22,13 +23,19 @@ class MainViewController: UITableViewController {
 // MARK: - TableViewDataSource Methods
 extension MainViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
+        guard !isLoadingData else { return 1 }
         return schedule.count
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard !isLoadingData else { return 1 }
         return schedule[section].count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !isLoadingData else {
+            return tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
+        }
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EventTableViewCell.identifier, for: indexPath) as? EventTableViewCell else {
             assertionFailure("TableView does not have an EventTableViewCell ready to dequeue")
             return UITableViewCell()
@@ -40,7 +47,8 @@ extension MainViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        schedule[section].first?.headerLabel
+        guard !isLoadingData else { return nil }
+        return schedule[section].first?.headerLabel
     }
 }
 
@@ -49,10 +57,14 @@ private extension MainViewController {
     private var errorTitle: String { "Unable to Get Upcoming Events" }
 
     func getEvents() {
-        EventCoordinator.shared.getEvents { result in
+        isLoadingData = true
+        EventCoordinator.shared.getEvents { [weak self] result in
+            guard let self = self else { return }
+            self.isLoadingData = false
             switch result {
             case .success(let events):
                 self.schedule = events
+                self.tableView.reloadData()
             case .failure(let error):
                 self.handleErrorRetrieveingEvents(error: error)
             }

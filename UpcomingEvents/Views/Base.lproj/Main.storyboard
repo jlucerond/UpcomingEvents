@@ -71,6 +71,34 @@
                                     <outlet property="startTimeLabel" destination="R7F-9c-bTI" id="GeW-Os-dvg"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadingCell" rowHeight="130" id="Bmr-Dn-tgz">
+                                <rect key="frame" x="0.0" y="158" width="414" height="130"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bmr-Dn-tgz" id="5HT-z8-y4e">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wey-Vy-GIu">
+                                            <rect key="frame" x="80" y="46.5" width="254.5" height="37"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="yfk-Kz-BzL">
+                                                    <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
+                                                </activityIndicatorView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="246" verticalHuggingPriority="247" horizontalCompressionResistancePriority="747" verticalCompressionResistancePriority="746" text="Mocking Network Call..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPt-7L-Bwo">
+                                                    <rect key="frame" x="47" y="0.0" width="207.5" height="37"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                    <color key="textColor" red="0.09095294625" green="0.085550681700000006" blue="0.49492187500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="wey-Vy-GIu" firstAttribute="centerY" secondItem="5HT-z8-y4e" secondAttribute="centerY" id="iLY-7h-hES"/>
+                                        <constraint firstItem="wey-Vy-GIu" firstAttribute="centerX" secondItem="5HT-z8-y4e" secondAttribute="centerX" id="pGZ-tQ-8hU"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="td4-Yp-Ac5" id="Kkl-yI-XzH"/>
